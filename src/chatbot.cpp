@@ -49,13 +49,14 @@ ChatBot::ChatBot(const ChatBot &source) // copy constructor
     std::cout << "ChatBot Copy Constructor" << std::endl;
 
     // data handles (owned)
-    _image = new wxBitmap; // we have to generate new image because an avatar image is owened by ChatBot
+    _image = new wxBitmap(); // we have to generate new image because an avatar image is owened by ChatBot
     *_image = *source._image; // avatar image
     // data handles (not owned)
     //_currentNode = new GraphNode(source._currentNode->GetID());
     _currentNode = source._currentNode;
     _rootNode = source._rootNode;
     _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
 }
 
 ChatBot& ChatBot::operator=(const ChatBot &source) // copy assignment operator
@@ -64,7 +65,8 @@ ChatBot& ChatBot::operator=(const ChatBot &source) // copy assignment operator
     if (this == &source)
         return *this;
     // data handles (owned)
-    _image = new wxBitmap; // we have to generate new image because an avatar image is owened by ChatBot
+    delete _image;
+    _image = new wxBitmap(); // we have to generate new image because an avatar image is owened by ChatBot
     *_image = *source._image; // avatar image
     /*
     if (_currentNode != nullptr)
@@ -75,6 +77,7 @@ ChatBot& ChatBot::operator=(const ChatBot &source) // copy assignment operator
     _currentNode = source._currentNode;
     _rootNode = source._rootNode;
     _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
     return *this;
 }
 
@@ -88,7 +91,9 @@ ChatBot::ChatBot(ChatBot &&source) // move constructor
     _currentNode = source._currentNode;
     _rootNode = source._rootNode;
     _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
 }
+
 ChatBot& ChatBot::operator=(ChatBot &&source) // move assignment operator
 {
     std::cout << "ChatBot Move Assignment Operator" << std::endl;
@@ -102,7 +107,7 @@ ChatBot& ChatBot::operator=(ChatBot &&source) // move assignment operator
     _currentNode = source._currentNode;
     _rootNode = source._rootNode;
     _chatLogic = source._chatLogic;
-    return *this;
+    _chatLogic->SetChatbotHandle(this);
 }
 
 ////

@@ -19,7 +19,7 @@ private:
 
     // data handles (owned)
     std::vector<std::unique_ptr<GraphNode>> _nodes;
-    std::vector<GraphEdge *> _edges;
+    //std::vector<GraphEdge *> _edges; -> The ownership of resources pointed by edge was delegated to GraphNode, so we don't need _edges anymore
 
     ////
     //// EOF STUDENT CODE
